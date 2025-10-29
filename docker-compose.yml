@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Development service
+  seller-dashboard-dev:
+    container_name: seller-dashboard-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  # Production service
+  seller-dashboard-prod:
+    container_name: seller-dashboard-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4173:4173"
+    environment:
+      - NODE_ENV=production
+    profiles:
+      - production
